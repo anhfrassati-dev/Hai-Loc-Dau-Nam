@@ -97,27 +97,53 @@ function ResultContent() {
 
     const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
-    const handleFacebookShare = () => {
+    const handleNativeShare = async () => {
+        if (typeof navigator !== "undefined" && navigator.share) {
+            try {
+                await navigator.share({
+                    title: "Lộc Thánh 2026",
+                    text: "Nhận Lộc Thánh đầu năm - Lời Chúa gửi đến bạn!",
+                    url: currentUrl,
+                });
+                return true;
+            } catch (error) {
+                console.error("Error sharing:", error);
+                // User cancelled or failed
+                return true; // Still return true to prevent fallback if it was a cancellation
+            }
+        }
+        return false;
+    };
+
+    const handleFacebookShare = async () => {
+        if (isMobile) {
+            const shared = await handleNativeShare();
+            if (shared) return;
+        }
+
         const shareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(currentUrl);
-        if (isMobile) {
-            window.location.href = shareUrl;
-        } else {
-            window.open(shareUrl, "_blank");
-        }
+        window.open(shareUrl, "_blank");
     };
 
-    const handleZaloShare = () => {
-        // Use sp.zalo.me/share_inline for better mobile compatibility or standard zalo.me/share
-        // Using standard share for stability, checking behavior on device 
+    const handleZaloShare = async () => {
+        if (isMobile) {
+            const shared = await handleNativeShare();
+            if (shared) return;
+        }
+
         const shareUrl = "https://zalo.me/share/?url=" + encodeURIComponent(currentUrl);
-        if (isMobile) {
-            window.location.href = shareUrl;
-        } else {
-            window.open(shareUrl, "_blank");
-        }
+        window.open(shareUrl, "_blank");
     };
 
-    const handleInstaShare = () => {
+    const handleInstaShare = async () => {
+        // Insta doesn't support easy link sharing via Web Share API usually (just DMs), 
+        // copying link is often more useful for Stories/Bio.
+        // We'll try native share first if mobile, as it might offer "Instagram Stories" if supported.
+        if (isMobile) {
+            const shared = await handleNativeShare();
+            if (shared) return;
+        }
+
         navigator.clipboard.writeText(currentUrl).then(
             () => {
                 alert("Đã copy link! Hãy dán vào Instagram stories hoặc bài viết.");
