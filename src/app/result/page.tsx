@@ -64,7 +64,7 @@ function ResultContent() {
 
     const handleDownload = async () => {
         if (!imageName) return;
-        const imagePath = `/assets/images/${encodeURIComponent(imageName)}`;
+        const imagePath = `/Hai-Loc-Dau-Nam/assets/images/${encodeURIComponent(imageName)}`;
 
         try {
             const response = await fetch(imagePath);
@@ -126,7 +126,7 @@ function ResultContent() {
                             <div className="card-frame">
                                 <img
                                     id="blessing-image"
-                                    src={`/assets/images/${imageName}`}
+                                    src={`/Hai-Loc-Dau-Nam/assets/images/${imageName}`}
                                     alt={"Lộc Thánh - " + imageName}
                                     className={imgClass}
                                 />
@@ -153,7 +153,7 @@ function ResultContent() {
                                 }}
                             >
                                 <img
-                                    src={`/assets/images/${imageName}`}
+                                    src={`/Hai-Loc-Dau-Nam/assets/images/${imageName}`}
                                     alt={"Lộc Thánh Full - " + imageName}
                                     style={{
                                         maxWidth: '95vw',
