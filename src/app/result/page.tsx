@@ -20,15 +20,10 @@ function ResultContent() {
     const [petalsActive, setPetalsActive] = useState(false); // Start paused
     const [showNotice, setShowNotice] = useState(false);
     const [isZoomed, setIsZoomed] = useState(false); // New state for zoom
-    const [isMobile, setIsMobile] = useState(false);
+
 
     useEffect(() => {
-        // Simple mobile detection
-        const checkMobile = () => {
-            const userAgent = typeof window !== "undefined" ? window.navigator.userAgent : "";
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-        };
-        setIsMobile(checkMobile());
+        // Simple mobile detection - Removed as sharing is removed
     }, []);
 
     useEffect(() => {
@@ -95,64 +90,7 @@ function ResultContent() {
         }
     };
 
-    const currentUrl = typeof window !== "undefined" ? window.location.href : "";
-
-    const handleNativeShare = async () => {
-        if (typeof navigator !== "undefined" && navigator.share) {
-            try {
-                await navigator.share({
-                    title: "Lộc Thánh 2026",
-                    text: "Nhận Lộc Thánh đầu năm - Lời Chúa gửi đến bạn!",
-                    url: currentUrl,
-                });
-                return true;
-            } catch (error) {
-                console.error("Error sharing:", error);
-                // User cancelled or failed
-                return true; // Still return true to prevent fallback if it was a cancellation
-            }
-        }
-        return false;
-    };
-
-    const handleFacebookShare = async () => {
-        if (isMobile) {
-            const shared = await handleNativeShare();
-            if (shared) return;
-        }
-
-        const shareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(currentUrl);
-        window.open(shareUrl, "_blank");
-    };
-
-    const handleZaloShare = async () => {
-        if (isMobile) {
-            const shared = await handleNativeShare();
-            if (shared) return;
-        }
-
-        const shareUrl = "https://zalo.me/share/?url=" + encodeURIComponent(currentUrl);
-        window.open(shareUrl, "_blank");
-    };
-
-    const handleInstaShare = async () => {
-        // Insta doesn't support easy link sharing via Web Share API usually (just DMs), 
-        // copying link is often more useful for Stories/Bio.
-        // We'll try native share first if mobile, as it might offer "Instagram Stories" if supported.
-        if (isMobile) {
-            const shared = await handleNativeShare();
-            if (shared) return;
-        }
-
-        navigator.clipboard.writeText(currentUrl).then(
-            () => {
-                alert("Đã copy link! Hãy dán vào Instagram stories hoặc bài viết.");
-            },
-            (err) => {
-                console.error("Không thể copy text: ", err);
-            }
-        );
-    };
+    // Sharing functions removed
 
     if (!imageName) return null; // Or loading spinner
 
@@ -238,43 +176,8 @@ function ResultContent() {
                                     📥 Tải Ảnh Về Máy
                                 </button>
 
-                                <div className="share-addon">
-                                    <span className="arrow-to-share">➜</span>
-                                    <div className="share-buttons-row">
-                                        <button
-                                            id="btn-share-fb"
-                                            className="share-btn fb"
-                                            title="Chia sẻ lên Facebook"
-                                            onClick={handleFacebookShare}
-                                        >
-                                            <img
-                                                src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg"
-                                                alt="Facebook"
-                                            />
-                                        </button>
-                                        <button
-                                            id="btn-share-zalo"
-                                            className="share-btn zalo"
-                                            title="Chia sẻ lên Zalo"
-                                            onClick={handleZaloShare}
-                                        >
-                                            <img
-                                                src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg"
-                                                alt="Zalo"
-                                            />
-                                        </button>
-                                        <button
-                                            id="btn-share-insta"
-                                            className="share-btn insta"
-                                            title="Copy Link để đăng Instagram"
-                                            onClick={handleInstaShare}
-                                        >
-                                            <img
-                                                src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg"
-                                                alt="Instagram"
-                                            />
-                                        </button>
-                                    </div>
+                                <div className="share-addon" style={{ display: 'none' }}>
+                                    {/* Share buttons removed */}
                                 </div>
                             </div>
 
@@ -286,7 +189,17 @@ function ResultContent() {
                                 🌐 Website Thánh Pier Giorgio Frassati
                             </a>
 
-                            <Link href="/" className="link-btn" id="btn-home">
+                            <Link
+                                href="/"
+                                className="secondary-btn"
+                                id="btn-home"
+                                style={{
+                                    marginTop: '0.5rem',
+                                    background: 'transparent',
+                                    border: '1px solid var(--maroon)',
+                                    color: 'var(--maroon)'
+                                }}
+                            >
                                 ↩️ Quay về trang chủ
                             </Link>
                         </div>
