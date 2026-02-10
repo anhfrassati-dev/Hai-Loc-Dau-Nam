@@ -1865,3 +1865,20 @@ textarea {
     opacity: 0;
   }
 }
+
+/* ===================================
+   MOBILE BACKGROUNDS
+   =================================== */
+@media (max-width: 768px) {
+  #intro-screen {
+    background-image: url('/Hai-Loc-Dau-Nam/assets/images/loc/5.svg');
+  }
+
+  #transition-screen {
+    background-image: url('/Hai-Loc-Dau-Nam/assets/images/loc/6.svg');
+  }
+
+  #result-screen.reveal-mode {
+    background-image: url('/Hai-Loc-Dau-Nam/assets/images/loc/7.svg');
+  }
+}
