@@ -1602,19 +1602,19 @@ textarea {
   0% {
     opacity: 0;
     transform: scale(0.5) rotateY(90deg);
-    filter: brightness(2) blur(10px);
+    filter: blur(10px);
   }
 
   40% {
     opacity: 1;
     transform: scale(0.9) rotateY(20deg);
-    filter: brightness(1.5) blur(3px);
+    filter: blur(3px);
   }
 
   100% {
     opacity: 1;
     transform: scale(1) rotateY(0deg);
-    filter: brightness(1) blur(0);
+    filter: blur(0);
   }
 }
 
@@ -1631,30 +1631,30 @@ textarea {
   /* Phase 1: Reveal first 1/3 (0-2s = 0%-25%) */
   0% {
     clip-path: inset(0 100% 0 0);
-    filter: brightness(1.3);
+    filter: brightness(1);
   }
 
   25% {
     clip-path: inset(0 67% 0 0);
-    filter: brightness(1.2);
+    filter: brightness(1);
   }
 
   /* Pause 1: Hold at 1/3 (2-3s = 25%-37.5%) */
   37.5% {
     clip-path: inset(0 67% 0 0);
-    filter: brightness(1.1);
+    filter: brightness(1);
   }
 
   /* Phase 2: Reveal second 1/3 (3-5s = 37.5%-62.5%) */
   62.5% {
     clip-path: inset(0 33% 0 0);
-    filter: brightness(1.1);
+    filter: brightness(1);
   }
 
   /* Pause 2: Hold at 2/3 (5-6s = 62.5%-75%) */
   75% {
     clip-path: inset(0 33% 0 0);
-    filter: brightness(1.05);
+    filter: brightness(1);
   }
 
   /* Phase 3: Reveal final 1/3 (6-8s = 75%-100%) */
